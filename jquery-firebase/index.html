@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js + jquery + firebase</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAg7iJcNaMZJaMqSxfz99bG92gh1NJbFx0",
+            authDomain: "august-test-c4bf9.firebaseapp.com",
+            databaseURL: "https://august-test-c4bf9.firebaseio.com",
+            projectId: "august-test-c4bf9",
+            storageBucket: "august-test-c4bf9.appspot.com",
+            messagingSenderId: "86757621993"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <style>
+        .main {
+            width: 100%;
+            margin: 15px 5px 0;
+        }
+
+        ul.tab-style {}
+
+        .order-wrapper {
+            border-top: 1px solid #dddddd;
+            padding: 10px;
+        }
+
+        ul.tab-style li:first-child {
+            border-right: 1px solid white;
+            border-radius: 5px 0px 0px 5px;
+        }
+
+        ul.tab-style li:last-child {
+            border-radius: 0px 5px 5px 0px;
+        }
+
+        ul.tab-style li {
+            /* padding: 7px 7px; */
+            background: #3077B7;
+            margin-top: 5px;
+            margin-bottom: 12px;
+            text-align: center;
+            width: 50%;
+        }
+
+        ul.tab-style li a[class='active'] div {
+            color: white;
+        }
+
+        ul.tab-style li a div {
+            color: gray;
+        }
+
+        ul.tab-style li a:hover div {
+            color: white;
+        }
+
+        .tab-title {
+            /* font-size: 20px; */
+            font-weight: bold;
+        }
+
+        .checkout_wrapper {
+            margin-top: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 2px;
+        }
+
+        .checkout_wrapper h4 {
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        .item_align {
+            text-align: right;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container row main">
+        <div class="col-md-9 col-lg-9 col-sm-8 col-xs-12">
+            <div>
+                <input type="text" id="user_name" placeholder="Enter user name" value="user123">
+            </div>
+            <table style="width:100%; margin-top:10px;">
+                <tbody id="products_body">
+
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
+            <div class="checkout_wrapper">
+                <div style="display:flex; justify-content:space-around">
+
+                    <h4>My Orders </h4>
+                    <div> <button class="btn btn-danger" type="button" onclick="removeAll()"><i class="fa fa-trash fa-2x" ></i></button></div>
+                </div>
+                <div class="order-wrapper">
+                    <div class="alert alert-success hide">
+
+                    </div>
+                    <div class="alert alert-danger hide">
+
+                    </div>
+                    <ul class="nav nav-tabs tab-style">
+                        <li>
+                            <a data-toggle="tab" href="#delivery" class="active">
+                                <div style="padding:12px;">
+                                    <div class="tab-title">Delivery</div>
+                                    <div>in 20 minutes</div>
+
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#pickup">
+                                <div style="padding:12px;">
+                                    <div class="tab-title">Pick up</div>
+                                    <div>in 10 minutes</div>
+
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" style="padding: 10px;">
+                        <div id="delivery" class="tab-pane fade-in active">
+                            <div id="show_on_click">
+                                <div id="checkout_items">
+
+                                </div>
+                                <div id="coupon_div" class="hide">
+                                    <div class=""></div>
+                                    <!-- <form> -->
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="coupon" placeholder="Enter Coupon Code" >
+                                            <!-- <div class="input-group-btn"> -->
+                                            <button class="btn btn-default" type="button" style="margin:0" onclick="checkToken()">
+                                                  <i class="fa fa-check"></i>
+                                                </button>
+                                            <!-- </div> -->
+                                        </div>
+                                        <!-- </form> -->
+                                </div>
+                                <div id="order-total">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="pickup" class="tab-pane fade">
+                            <h3>Pick up</h3>
+                            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                                labore et dolore magna aliqua. </p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div style="margin-top: 10px;">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">
+                        Check Out
+                    </button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="show_item_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background:#ED561B">
+                        <h4 class="modal-title w-100" id="myModalLabel">Adding Menu Choices</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div id="item"></div>
+                        <div id="quantity"></div>
+                        <div id="options" style="margin-top:20px;"></div>
+                        <div id="comments" style="width:70%">
+                            <b style="font-weight:bold">Add Comments</b>
+                            <textarea name="" id="" cols="20" rows="10" width="70%"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer" style="-webkit-justify-content:flex-start;justify-content:flex-start">
+                        <button type="button" class="btn btn-primary align-left btn-block" style="width:60%;" id="update" onClick="sendToCheckout()">Update</button>
+                        <!-- background:#5CB75C -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- SCRIPTS -->
+        <!-- JQuery -->
+        <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+
+</body>
+
+</html>

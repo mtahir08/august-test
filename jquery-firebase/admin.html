@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js + jquery + firebase</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script> -->
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAg7iJcNaMZJaMqSxfz99bG92gh1NJbFx0",
+            authDomain: "august-test-c4bf9.firebaseapp.com",
+            databaseURL: "https://august-test-c4bf9.firebaseio.com",
+            projectId: "august-test-c4bf9",
+            storageBucket: "august-test-c4bf9.appspot.com",
+            messagingSenderId: "86757621993"
+        };
+        firebase.initializeApp(config);
+    </script>
+</head>
+
+<body>
+    <div style="display:flex;">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add_item_modal">
+            Add Item
+        </button>
+        <div style="width:300px">
+            <div class="input-group">
+                <input type="text" class="form-control" id="coupon" placeholder="Enter Coupon Code">
+                <!-- <div class="input-group-btn"> -->
+                <button class="btn btn-default" type="button" style="margin-bottom:0" onclick="addCoupon()">
+                                                      <i class="fa fa-check"></i>
+                                                    </button>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+    <table id="products"></table>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="products_body">
+
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="add_item_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" id="myModalLabel">Item</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="md-form">
+                        <input type="text" id="item-name" class="form-control">
+                        <label for="item-name">Name</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" id="item-description" class="form-control">
+                        <label for="item-description">Description</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="number" id="item-price" class="form-control">
+                        <label for="item-price">Price</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" id="item-options" class="form-control">
+                        <label for="item-options">Options</label>
+                    </div>
+                    <div id="option-items">
+
+                    </div>
+                    <div class="form-group">
+                        <div style="border: 2px dashed gray; height:30px; text-align:center" onclick="select()"> Click here to select Image</div>
+                    </div>
+                    <input style="display:none" type="file" id="file" name="image" accept=".png,.jpeg,.jpg" />
+                    <!-- <div class="form-group">
+                        <input type="file" id="file" name="image" accept=".png,.jpeg,.jpg">
+                        <label for="file"></label>
+                    </div> -->
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save" onclick="saveItems()">Save</button>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <script type="text/javascript" src="admin.js"></script>
+</body>
+
+</html>
